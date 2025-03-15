@@ -27,18 +27,44 @@ def block_to_html(block_type, block_text):
             htmlnodes = textnode_list_to_htmlnode_list(textnodes)
             return ParentNode(tag = "p", children=htmlnodes)
         case BlockType.HEADING:
-            pass
+            level = block_text.count("#", 0, 6)
+            block_text = block_text.replace("#", "").lstrip()
+            textnodes = text_to_textnodes(block_text)
+            htmlnodes = textnode_list_to_htmlnode_list(textnodes)
+            return ParentNode(tag = f"h{level}", children=htmlnodes)
+
         case BlockType.CODE:
             block_text = block_text.replace("```","").lstrip()
             textnodes = [TextNode(block_text, TextType.CODE)]
             htmlnodes = textnode_list_to_htmlnode_list(textnodes)
             return ParentNode(tag = "pre", children=htmlnodes)
         case BlockType.QUOTE:
-            pass
+            block_text = block_text.replace("> ", "").lstrip()
+            block_text = block_text.replace("\n", " ")
+            textnodes = text_to_textnodes(block_text)
+            htmlnodes = textnode_list_to_htmlnode_list(textnodes)
+            return ParentNode(tag = "blockquote", children=htmlnodes)
+
         case BlockType.UNORDERED_LIST:
-            pass
+            lines = block_text.split("\n")
+            children = []
+            for line in lines:
+                line = line.replace("- ", "").lstrip()
+                textnodes = text_to_textnodes(line)
+                htmlnodes = textnode_list_to_htmlnode_list(textnodes)
+                children.append(ParentNode(tag = "li", children=htmlnodes))
+            return ParentNode(tag = "ul", children=children)
+
         case BlockType.ORDERED_LIST:
-            pass
+            lines = block_text.split("\n")
+            children = []
+            for line in lines:
+                line = line.split(". ", 1)[1].lstrip()
+                textnodes = text_to_textnodes(line)
+                htmlnodes = textnode_list_to_htmlnode_list(textnodes)
+                children.append(ParentNode(tag = "li", children=htmlnodes))
+            return ParentNode(tag = "ol", children=children)
+
         case _:
             raise ValueError("Unknown block type")
 
