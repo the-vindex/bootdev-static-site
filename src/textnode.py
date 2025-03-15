@@ -50,7 +50,7 @@ def extract_markdown_links(text):
     return matches
 
 def create_image_markdown(tuple_alt_img):
-    return f"![{tuple_alt_img[0]}]({tuple_alt_img[1]})"
+    return f"[{tuple_alt_img[0]}]({tuple_alt_img[1]})"
 
 
 def split_nodes_link(old_nodes):
@@ -63,7 +63,7 @@ def split_nodes_link(old_nodes):
             continue
         else:
             for image_tuple in image_tuples:
-                node_text_before_and_after_url = node_text.split(f"[{image_tuple[0]}]({image_tuple[1]})")
+                node_text_before_and_after_url = node_text.split(create_image_markdown(image_tuple))
                 node_text_before_url: str = node_text_before_and_after_url[0]
                 node_text_after_url: str = node_text_before_and_after_url[1]
 
