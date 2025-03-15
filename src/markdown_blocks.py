@@ -11,7 +11,7 @@ def markdown_to_blocks(markdown):
 def block_to_block_type(text):
     if re.match(r"^(#+)\s", text):
         return BlockType.HEADING
-    if re.match(r"^```.*```", text):
+    if re.match(r"^```", text):
         return BlockType.CODE
     if re.match(r"^>\s", text):
         return BlockType.QUOTE
@@ -25,8 +25,6 @@ def block_to_block_type(text):
             if not re.match(rf"^{i+1}\.\s", line):
                 return BlockType.PARAGRAPH
         return BlockType.ORDERED_LIST
-
-
 
     return BlockType.PARAGRAPH
 

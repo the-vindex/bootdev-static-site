@@ -5,6 +5,9 @@ from leafnode import LeafNode
 
 import re
 
+def textnode_list_to_htmlnode_list(textnode_list):
+    return list(map(text_node_to_html_node, textnode_list))
+
 def text_node_to_html_node(node):
     match node.text_type:
         case TextType.TEXT:
@@ -101,7 +104,6 @@ def text_to_textnodes(text):
 
     result = split_nodes_delimiter(result, "**", TextType.BOLD)
     result = split_nodes_delimiter(result, "_", TextType.ITALIC)
-    result = split_nodes_delimiter(result, "`", TextType.CODE)
     result = split_nodes_delimiter(result, "`", TextType.CODE)
     result = split_nodes_image(result)
     result = split_nodes_link(result)
