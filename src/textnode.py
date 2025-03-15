@@ -96,8 +96,17 @@ def __split_nodes_internal(old_nodes, extract_markdown_func, rebuild_text_func, 
 
     return new_nodes
 
+def text_to_textnodes(text):
+    result = [TextNode(text, TextType.TEXT)]
 
+    result = split_nodes_delimiter(result, "**", TextType.BOLD)
+    result = split_nodes_delimiter(result, "_", TextType.ITALIC)
+    result = split_nodes_delimiter(result, "`", TextType.CODE)
+    result = split_nodes_delimiter(result, "`", TextType.CODE)
+    result = split_nodes_image(result)
+    result = split_nodes_link(result)
 
+    return result
 
 class TextType(Enum):
     TEXT = "text"

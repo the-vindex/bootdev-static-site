@@ -4,7 +4,7 @@ from textnode import TextNode, TextType, split_nodes_delimiter
 
 
 class MarkdownToTextNodeTestCase(unittest.TestCase):
-    def test_something(self):
+    def test_split_by_special_character(self):
         node = TextNode("This is text with a `code block` word", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
         expected = [
