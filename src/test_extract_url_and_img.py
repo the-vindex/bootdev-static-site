@@ -17,11 +17,7 @@ class ExtractURLAndImgTestCase(unittest.TestCase):
         expected = [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
         self.assertEqual(links, expected)
 
-    def test_extract_markdown_images(self):
-        matches = extract_markdown_images(
-            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
-        )
-        self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
+
 
     def test_split_nodes_link(self):
         node = TextNode(
@@ -78,7 +74,24 @@ class ExtractURLAndImgTestCase(unittest.TestCase):
         ]
         self.assertEqual(new_nodes, expected)
 
-
+    #we do just one complex test as we will reuse most of the code between URL and IMG
+    def test_split_images(self):
+        node = TextNode(
+            "Text before image ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
+            TextType.TEXT,
+        )
+        new_nodes = split_nodes_image([node])
+        self.assertListEqual(
+            [
+                TextNode("Text before image ", TextType.TEXT),
+                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode(" and another ", TextType.TEXT),
+                TextNode(
+                    "second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
+                ),
+            ],
+            new_nodes,
+        )
 
 if __name__ == '__main__':
     unittest.main()
