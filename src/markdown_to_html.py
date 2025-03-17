@@ -1,6 +1,6 @@
 from markdown_blocks import markdown_to_blocks, block_to_block_type, BlockType
 from parentnode import ParentNode
-from src.markdown_blocks import parse_block_heading
+from markdown_blocks import parse_block_heading
 from textnode import text_to_textnodes, textnode_list_to_htmlnode_list, TextNode, TextType
 
 

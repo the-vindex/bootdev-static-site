@@ -21,7 +21,7 @@ def extract_title(page_markdown):
     return title
 
 def generate_page(from_path, template_path, dest_path):
-    print("Generating page from {from_path} to {dest_path} using {template_path}")
+    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     page_markdown = Path(from_path).read_text()
     template_text = Path(template_path).read_text()
     title = extract_title(page_markdown)
@@ -29,6 +29,15 @@ def generate_page(from_path, template_path, dest_path):
     html_string = html_node_tree.to_html()
     template_text = template_text.replace("{{ Title }}", title)
     template_text = template_text.replace("{{ Content }}", html_string)
-    Path(dest_path).write_text(template_text)
+
+    create_folder_and_write_file(dest_path, template_text)
+
+
+def create_folder_and_write_file(dest_path, template_text):
+    dest_file = Path(dest_path)
+    dest_dir = dest_file.parent
+    dest_dir.mkdir(parents=True, exist_ok=True)
+
+    dest_file.write_text(template_text)
 
 

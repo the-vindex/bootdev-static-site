@@ -1,14 +1,10 @@
-from src.generate_page import generate_page
+from generate_page import generate_page
 import os
 import shutil
 
 def main():
     copy_static()
 
-# Write a recursive function that copies all the contents from a source directory to a destination directory (in our case, static to public)
-# It should first delete all the contents of the destination directory (public) to ensure that the copy is clean.
-# It should copy all files and subdirectories, nested files, etc.
-# I recommend logging the path of each file you copy, so you can see what's happening as you run and debug your code.
 def copy_static():
     source_dir = "static"
     destination_dir = "public"
@@ -34,6 +30,10 @@ def copy_static():
             print(f"Copied file: {source_path} to {destination_path}")
 
     generate_page("content/index.md", "template.html", "public/index.html")
+    generate_page("content/blog/glorfindel/index.md", "template.html", "public/blog/glorfindel/index.html")
+    generate_page("content/blog/tom/index.md", "template.html", "public/blog/tom/index.html")
+    generate_page("content/blog/majesty/index.md", "template.html", "public/blog/majesty/index.html")
+    generate_page("content/contact/index.md", "template.html", "public/contact/index.html")
 
 
 if __name__ == "__main__":
