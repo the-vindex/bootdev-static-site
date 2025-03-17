@@ -8,13 +8,12 @@ from generate_page import generate_pages_recursive
 def main():
     source_dir = "static"
     dest_dir = "docs"
-    basepath = "/"
+    basepath = ""
 
     import sys
 
     if len(sys.argv) > 1:
-        dest_dir = sys.argv[1]
-        basepath = dest_dir
+        basepath = sys.argv[1]
     else:
         print("No destination directory provided, using default")
 
