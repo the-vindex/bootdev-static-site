@@ -25,7 +25,7 @@ class GeneratePageTest(unittest.TestCase):
         import tempfile
         with tempfile.NamedTemporaryFile(delete=False, suffix=".html", dir="/tmp") as tmp_file:
             dest_path = tmp_file.name
-            generate_page(content_path, template_path, dest_path)
+            generate_page(content_path, template_path, dest_path, "BASEPATH")
             output_html = Path(dest_path).read_text()
 # Expecting body to contain: html
 # Expecting body to contain: <h1>Tolkien Fan Club</h1>
