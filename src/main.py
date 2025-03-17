@@ -1,4 +1,4 @@
-from textnode import TextNode, TextType
+from src.generate_page import generate_page
 import os
 import shutil
 
@@ -32,6 +32,8 @@ def copy_static():
             destination_path = os.path.join(destination_dir, os.path.relpath(source_path, source_dir))
             shutil.copy2(source_path, destination_path)
             print(f"Copied file: {source_path} to {destination_path}")
+
+    generate_page("content/index.md", "template.html", "public/index.html")
 
 
 if __name__ == "__main__":

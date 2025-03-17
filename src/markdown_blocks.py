@@ -36,3 +36,10 @@ class BlockType(Enum):
     UNORDERED_LIST = "unordered_list"
     ORDERED_LIST = "ordered_list"
 
+
+# input: block of type BlockType.HEADING
+# returns: block_text, heading level
+def parse_block_heading(block_text):
+    level = block_text.count("#", 0, 6)
+    title = block_text.replace("#", "").lstrip()
+    return level, title

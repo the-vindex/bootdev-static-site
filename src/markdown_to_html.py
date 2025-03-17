@@ -1,6 +1,7 @@
 from markdown_blocks import markdown_to_blocks, block_to_block_type, BlockType
 from parentnode import ParentNode
-from textnode import text_to_textnodes, text_node_to_html_node, textnode_list_to_htmlnode_list, TextNode, TextType
+from src.markdown_blocks import parse_block_heading
+from textnode import text_to_textnodes, textnode_list_to_htmlnode_list, TextNode, TextType
 
 
 # for each line then call text_to_textnodes
@@ -27,9 +28,8 @@ def block_to_html(block_type, block_text):
             htmlnodes = textnode_list_to_htmlnode_list(textnodes)
             return ParentNode(tag = "p", children=htmlnodes)
         case BlockType.HEADING:
-            level = block_text.count("#", 0, 6)
-            block_text = block_text.replace("#", "").lstrip()
-            textnodes = text_to_textnodes(block_text)
+            level, title = parse_block_heading(block_text)
+            textnodes = text_to_textnodes(title)
             htmlnodes = textnode_list_to_htmlnode_list(textnodes)
             return ParentNode(tag = f"h{level}", children=htmlnodes)
 
@@ -67,6 +67,7 @@ def block_to_html(block_type, block_text):
 
         case _:
             raise ValueError("Unknown block type")
+
 
 def wrap_with_node_html_paragraph(children):
     return [ParentNode(tag = "p", children=children)]
